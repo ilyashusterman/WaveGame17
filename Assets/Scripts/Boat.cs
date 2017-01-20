@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Boat : MonoBehaviour {
-    public enum Status
-    {
-        Right, Left, Fire
-    }
+
     // Use this for initialization
     public float speed = 15;
     private float minX, maxX;
@@ -18,13 +15,15 @@ public class Boat : MonoBehaviour {
     public float health = 250;
     public AudioClip fireSound;
     public GameObject healthBar;
+    
 
     void Start () {
         float distance = transform.position.z - Camera.main.transform.position.z;
         Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance));
         Vector3 rightMost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance));
-        minX = leftMost.x + padding;
-        maxX = rightMost.x - padding;
+        //minX = leftMost.x + padding;
+        //maxX = rightMost.x - padding;
+        speed = 15;
     }
 	
 	// Update is called once per frame
@@ -32,21 +31,6 @@ public class Boat : MonoBehaviour {
         handleInput();
     }
 
-    public void handleInput(Status status)
-    {
-        switch (status)
-        {
-   //         case Status.Fire: InvokeRepeating("fire", 0.000001f, firingRate);  break;
-            case Status.Right: transform.Translate(Vector3.right * Time.deltaTime * speed); break;
-            case Status.Left: transform.Translate(Vector3.left * Time.deltaTime * speed); break;
-        }
-        //if (Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    CancelInvoke("fire");
-        //}
-        float newX = Mathf.Clamp(transform.position.x, minX, maxX);
-        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-    }
     void handleInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -67,10 +51,6 @@ public class Boat : MonoBehaviour {
         }
        // float newX = Mathf.Clamp(transform.position.x, minX, maxX);
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-    }
-    public void makeMove()
-    {
-        Debug.Log("moving");
     }
 
 }
