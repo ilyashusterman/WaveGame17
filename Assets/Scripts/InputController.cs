@@ -9,10 +9,12 @@ public class InputController : MonoBehaviour {
     private Rigidbody rbody;
     public float accellerateSpeed = 1000f;
     public float turnSpeed = 1000f;
-	// Use this for initialization
-	void Start () {
+    private Animator animator;
+    // Use this for initialization
+    void Start () {
         boat = GetComponent<Boat>();
         rbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -33,13 +35,18 @@ public class InputController : MonoBehaviour {
     {
         Debug.Log("movingRight");
         boat.transform.Translate(Vector3.right * Time.deltaTime * boat.speed);
-       // boat.transform.position = new Vector3(boat.transform.position.x, boat.transform.position.y, boat.transform.position.z);
+        animator.SetBool("moveLeft", false);
+        animator.SetBool("moveRight", true);
     }
     public void makeMoveLeft()
     {
         Debug.Log("movingLeft");
         boat.transform.Translate(Vector3.left * Time.deltaTime * boat.speed);
-        //boat.transform.position = new Vector3(boat.transform.position.x, boat.transform.position.y, boat.transform.position.z);
+        animator.SetBool("moveRight", false);
+        animator.SetBool("moveLeft", true);
     }
-
+    public void fire()
+    {
+        boat.fire();
+    }
 }
